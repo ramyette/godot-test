@@ -3,7 +3,7 @@ extends Node2D
 @onready var outer_glow: Line2D = $OuterGlow
 @onready var core_trail: Line2D = $CoreTrail
 
-const SPEED := 2200.0
+const SPEED := 6000.0
 const TRAIL_LENGTH := 40.0
 
 var direction := Vector2.RIGHT

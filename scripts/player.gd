@@ -2,24 +2,30 @@ extends CharacterBody2D
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
+const FIRE_DELAY := 0.12
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var gun_pivot: Node2D = $GunPivot
 @onready var gun_sprite: Sprite2D = $GunPivot/Sprite
 @onready var muzzle: Marker2D = $GunPivot/Muzzle
+@onready var shoot_ray: RayCast2D = $GunPivot/Muzzle/ShootRay
 
 @export var tracer_scene: PackedScene
 
 var jumping = false
+var fire_cooldown := 0.0
 
 func _ready() -> void:
 	sprite.animation = "default"
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	fire_cooldown = maxf(fire_cooldown - delta, 0.0)
+	
 	if Input.is_action_just_pressed("jump"):
 		jumping = true
-	if Input.is_action_just_pressed("shoot"):
+	if Input.is_action_pressed("shoot") and fire_cooldown <= 0.0:
 		shoot()
+		fire_cooldown = FIRE_DELAY
 	
 	var aim_direction := (get_global_mouse_position() - global_position).normalized()
 	gun_pivot.rotation = aim_direction.angle()
@@ -49,11 +55,17 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func shoot() -> void:
+	shoot_ray.force_raycast_update()
+	
+	var end_position := muzzle.global_position + muzzle.global_transform.x * 1000.0
+	
+	if shoot_ray.is_colliding():
+		end_position = shoot_ray.get_collision_point()
+	
+		var hit_object = shoot_ray.get_collider()
+		if hit_object.has_method("die"):
+			hit_object.die()
+	
 	var tracer = tracer_scene.instantiate()
 	get_tree().current_scene.add_child(tracer)
-
-	var shoot_direction := muzzle.global_position.direction_to(get_global_mouse_position())
-	var max_range := 1000.0
-	var end_position := muzzle.global_position + shoot_direction * max_range
-
 	tracer.setup(muzzle.global_position, end_position)

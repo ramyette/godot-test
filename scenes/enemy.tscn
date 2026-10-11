@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://bhs3diould0mq"]
+
+[ext_resource type="Script" uid="uid://dhhpknum52e2l" path="res://scripts/enemy.gd" id="1_7p1mj"]
+[ext_resource type="Texture2D" uid="uid://c7ru33x240lye" path="res://resources/PNG/Enemies/Tiles/tile_0004.png" id="2_md0e3"]
+[ext_resource type="Texture2D" uid="uid://cvmhohoghfdnt" path="res://resources/PNG/Enemies/Tiles/tile_0006.png" id="3_5uy6h"]
+[ext_resource type="Texture2D" uid="uid://b70uxw6iun4oq" path="res://resources/PNG/Enemies/Tiles/tile_0005.png" id="4_c4w8v"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i4mcs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_5uy6h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_md0e3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_c4w8v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_md0e3")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i4mcs"]
+radius = 34.928497
+
+[node name="Enemy" type="Area2D" unique_id=1807340011 groups=["enemies"]]
+script = ExtResource("1_7p1mj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1565999507]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_i4mcs")
+autoplay = "default"
+frame_progress = 0.45536777
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=930785119]
+shape = SubResource("CircleShape2D_i4mcs")
