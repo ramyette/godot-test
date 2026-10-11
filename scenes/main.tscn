@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ch5opaa0o8pja" path="res://resources/PNG/Players/Tilemap/tilemap.png" id="3_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://cropq0ysq7hfb" path="res://scenes/tracer.tscn" id="3_tefeu"]
 [ext_resource type="Texture2D" uid="uid://bx5t7pe3vxcan" path="res://resources/PNG/Weapons/Tiles/tile_0005.png" id="4_jyhfs"]
+[ext_resource type="Script" uid="uid://bwxxac4t26qfq" path="res://scripts/death_screen.gd" id="8_tipki"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ig7tw"]
 texture = ExtResource("1_sugp2")
@@ -572,6 +573,25 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i4mcs"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tipki"]
+bg_color = Color(0.6, 0.6, 0.6, 0.5568628)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85g3d"]
+bg_color = Color(0, 0.58431375, 0, 0.3764706)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [node name="Game" type="Node2D" unique_id=143479857]
 script = ExtResource("1_tefeu")
 enemy_scene = ExtResource("2_o6xl0")
@@ -618,6 +638,17 @@ target_position = Vector2(1000, 0)
 hit_from_inside = true
 collide_with_areas = true
 
+[node name="HealthBar" type="ProgressBar" parent="Player" unique_id=876566085]
+z_index = 5
+offset_left = -40.0
+offset_top = -35.22
+offset_right = 40.0
+offset_bottom = -21.11
+theme_override_styles/background = SubResource("StyleBoxFlat_tipki")
+theme_override_styles/fill = SubResource("StyleBoxFlat_85g3d")
+value = 100.0
+show_percentage = false
+
 [node name="EnemySpawnPoints" type="Node2D" parent="." unique_id=238370142]
 
 [node name="1" type="Marker2D" parent="EnemySpawnPoints" unique_id=1310991261 groups=["enemy_spawn"]]
@@ -637,3 +668,16 @@ position = Vector2(170, 132)
 
 [node name="SpawnTimer" type="Timer" parent="." unique_id=1859594536]
 wait_time = 1.5
+
+[node name="DeathScreen" type="CanvasLayer" parent="." unique_id=1845117244]
+visible = false
+script = ExtResource("8_tipki")
+
+[node name="CenterContainer" type="CenterContainer" parent="DeathScreen" unique_id=721678679]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Replay" type="Button" parent="DeathScreen/CenterContainer" unique_id=1706708178]
+layout_mode = 2
+text = "You Died
+Replay"
