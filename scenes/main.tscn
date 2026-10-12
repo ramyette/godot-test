@@ -592,6 +592,11 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
+[sub_resource type="LabelSettings" id="LabelSettings_tipki"]
+font_size = 51
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+
 [node name="Game" type="Node2D" unique_id=143479857]
 script = ExtResource("1_tefeu")
 enemy_scene = ExtResource("2_o6xl0")
@@ -671,13 +676,24 @@ wait_time = 1.5
 
 [node name="DeathScreen" type="CanvasLayer" parent="." unique_id=1845117244]
 visible = false
+offset = Vector2(960, 540)
+transform = Transform2D(1, 0, 0, 1, 960, 540)
 script = ExtResource("8_tipki")
 
 [node name="CenterContainer" type="CenterContainer" parent="DeathScreen" unique_id=721678679]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 77.0
+offset_bottom = 54.0
 
 [node name="Replay" type="Button" parent="DeathScreen/CenterContainer" unique_id=1706708178]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-text = "You Died
-Replay"
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 9.295)
+text = "Retry"
+
+[node name="Label" type="Label" parent="DeathScreen/CenterContainer" unique_id=1084303328]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -39.69)
+text = "You Died"
+label_settings = SubResource("LabelSettings_tipki")
